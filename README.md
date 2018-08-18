@@ -2,21 +2,32 @@
 
 ## Description
 
-Some blurb about the program
+Example of how to build simple web service that uses middleware to wrap request logging and metric capturing.
 
 ## Usage
 
-Usage instructions with code examples
+Usage instructions
 
 ```shell
-# Here is the code example
-go run something
+prometheus-middleware - v0.0.1
+
+ Choose a command run in prometheus-middleware:
+
+ compile     compiles binary for linux, osx and windows
+ binary      builds a statically linked binary of the application (used in Docker image)
+ image       builds a docker image for the application
+ publish     pushes the tagged docker image to docker hub
+ run         runs the application locally
+ run_image   builds and runs the docker image locally
+ test        run test suitde for application
+ clean       remove binary from non release directory
+ help        Show this help message
 ```
 
 ## TODO
 
-- [ ] Update README
+- [x] Update README
 
 ## License
 
-MIT
+[MIT](./LICENSE)

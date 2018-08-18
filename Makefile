@@ -3,10 +3,10 @@ all: help
 
 # VARIABLES
 USERNAME = davyj0nes
-APP_NAME = app_name
+APP_NAME = prometheus-middleware
 
 GO_VERSION ?= 1.10.3
-GO_PROJECT_PATH ?= github.com/davyj0nes/app_name
+GO_PROJECT_PATH ?= github.com/davyj0nes/prometheus-middleware
 GO_FILES = $(shell go list ./... | grep -v /vendor/)
 
 APP_PORT = 8080
@@ -21,8 +21,6 @@ BUILD_FLAGS = -a -tags netgo --installsuffix netgo
 LDFLAGS = -ldflags "-s -w -X ${GO_PROJECT_PATH}/cmd.Release=${RELEASE} -X ${GO_PROJECT_PATH}/cmd.Commit=${COMMIT} -X ${GO_PROJECT_PATH}/cmd.BuildTime=${BUILD_TIME}"
 DOCKER_GO_BUILD = docker run --rm -v "$(GOPATH)":/go -v "$(CURDIR)":/go/src/app -w /go/src/app golang:${GO_VERSION}
 GO_BUILD_STATIC = $(BUILD_PREFIX) go build $(BUILD_FLAGS) $(LDFLAGS)
-GO_BUILD_OSX = GOOS=darwin GOARCh=amd64 go build $(LDFLAGS)
-GO_BUILD_WIN = GOOS=windows GOARCh=amd64 go build $(LDFLAGS)
 
 DOCKER_RUN_CMD = docker run -it --rm -v ${APP_NAME}:/app/.tasks --name ${APP_NAME} ${USERNAME}/${APP_NAME}:${IMAGE_VERSION} "\$$@"
 
@@ -34,10 +32,6 @@ compile:
 	@mkdir -p releases/${RELEASE}
 	$(call blue, "# Compiling Static Golang App...")
 	@${DOCKER_GO_BUILD} sh -c 'go get && ${GO_BUILD_STATIC} -o ${APP_NAME}_static'
-	$(call blue, "# Compiling OSX Golang App...")
-	@${DOCKER_GO_BUILD} sh -c 'go get && ${GO_BUILD_OSX} -o releases/${RELEASE}/${APP_NAME}_osx'
-	$(call blue, "# Compiling Windows Golang App...")
-	@${DOCKER_GO_BUILD} sh -c 'go get && ${GO_BUILD_WIN} -o releases/${RELEASE}/${APP_NAME}.exe'
 
 ## binary: builds a statically linked binary of the application (used in Docker image)
 .PHONY: binary
@@ -63,7 +57,7 @@ publish: image
 .PHONY: run
 run:
 	$(call blue, "# Running App...")
-	@docker run -it --rm -v "$(GOPATH)":/go -v "$(CURDIR)":/go/src/app -p ${local_port}:${APP_PORT} -w /go/src/app golang:${GO_VERSION} go run main.go
+	@docker run -it --rm -v "$(GOPATH)":/go -v "$(CURDIR)":/go/src/app -p ${LOCAL_PORT}:${APP_PORT} -w /go/src/app golang:${GO_VERSION} go run main.go
 
 ## run_image: builds and runs the docker image locally
 .PHONY: run_image
