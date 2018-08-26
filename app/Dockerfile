@@ -1,18 +1,18 @@
 # Multistage Build
 
 ### CREATE DOCKERMASTER USER
-FROM alpine:3.6 AS alpine
+FROM alpine:3.8 AS alpine
 RUN adduser -D -u 10001 dockmaster
 
 ## MAIN IMAGE
 FROM scratch
-LABEL Name=app_name
+LABEL Name=prometheus-middleware
 LABEL Author=davyj0nes
 
 COPY --from=alpine /etc/passwd /etc/passwd
 
-ADD app /
+ADD prometheus-middleware /
 USER dockmaster
 
 EXPOSE 8080
-CMD ["./app"]
+CMD ["./prometheus-middleware"]

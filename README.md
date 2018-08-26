@@ -4,6 +4,8 @@
 
 Example of how to build simple web service that uses middleware to wrap request logging and metric capturing.
 
+The respository is structured so that the main componants of the service are within `router/` and are brought together within `main.go`. There are middleware for logging and monitoring defined within the `logger` and `metrics` packages. These can be added or not within `router` and will be applied to each request that comes in.
+
 ## Usage
 
 Usage instructions

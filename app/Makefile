@@ -53,6 +53,13 @@ publish: image
 	$(call blue, "# Publishing Docker Image...")
 	@docker push docker.io/${USERNAME}/${APP_NAME}:${RELEASE}
 
+## deploy: deploy app to k8s cliuster
+.PHONY: deploy
+deploy:
+	$(call blue, "# Deploying to Kubernetes...")
+	@kubectl create -f deploy/service.yml
+	@kubectl create -f deploy/deployment.yml
+
 ## run: runs the application locally
 .PHONY: run
 run:

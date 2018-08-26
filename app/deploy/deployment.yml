@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: prometheus-middleware
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: prometheus-middleware
+    spec:
+      containers:
+      - name: prometheus-middleware
+        image: davyj0nes/prometheus-middleware:0.0.1
