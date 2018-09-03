@@ -26,7 +26,7 @@ func main() {
 	flag.Parse()
 
 	logger.Info("Starting Service...")
-	router := router.New()
+	rtr := router.New()
 
 	interrupt := make(chan os.Signal, 1)
 
@@ -34,7 +34,7 @@ func main() {
 
 	srv := &http.Server{
 		Addr:    ":" + *port,
-		Handler: router,
+		Handler: rtr,
 	}
 
 	go func() {

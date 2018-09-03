@@ -8,6 +8,8 @@ import (
 	"github.com/davyj0nes/prometheus-example/app/router/handlers"
 	"github.com/gorilla/mux"
 	"github.com/justinas/alice"
+
+	_ "net/http/pprof"
 )
 
 // New instantiates a new Router with handlers attached
